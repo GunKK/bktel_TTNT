@@ -37,12 +37,14 @@ class StudentController extends Controller
     {   
         // dd($request->user());
         $data = $request->all();
-        $student = Student::create($data);
+        // dd($data);
+        $student = new Student($data);
+        $student->save();
+        // dd($student->id);
 
-        // $user = $request->user();
-        $emailUser = Auth::user()->email;
-        $user = User::where('email', $emailUser);
-        $user->update(['student_id' => $student->student_id]);
+        $user = $request->user();
+        $user->student_id = $student->id;
+        $user->save();
 
         return response()->json($student);
     }

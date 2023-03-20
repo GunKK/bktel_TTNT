@@ -4,6 +4,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
+import SuccessButton from '@/Components/SuccessButton.vue';
 
 const user = usePage().props.auth.user;
 
@@ -29,7 +30,7 @@ const form = useForm({
             </p>
         </header>
 
-        <form @submit.prevent="form.post(route('student'))" class="mt-6 space-y-6">
+        <form @submit.prevent="form.post(route('student.store'))" class="mt-6 space-y-6">
             <div>
                 <InputLabel for="last_name" value="Họ" />
 
@@ -150,7 +151,6 @@ const form = useForm({
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.note"
-                    required
                     autofocus
                     autocomplete="note"
                 />

@@ -66,7 +66,10 @@ class StudentController extends Controller
     {
         $student = Student::find($id);
 
-        return response()->json($student);
+        // return response()->json($student);
+        return Inertia::render('Student/Update', [
+            'student' => $student
+        ]);
     }
 
     /**
@@ -88,8 +91,8 @@ class StudentController extends Controller
     {
         $student = Student::find($id);
         $student->delete();
-        $userStudent = User::where('student_id', $id);
-        $userStudent->update(['student_id' => null]);
+        // $userStudent = User::where('student_id', $id);
+        // $userStudent->update(['student_id' => null]);
 
         return response('message', 'Đã xóa thành công');
     }

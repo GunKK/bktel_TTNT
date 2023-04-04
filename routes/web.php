@@ -34,8 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::group(['middleware' => 'student_check'], function () {
+        Route::get('student/create', [StudentController::class, 'create'])->name('student.create');
+        Route::middleware('student_null')->group(function () {
+            Route::resource('student', StudentController::class)->except(['index', 'create']);
+        });
+    });
 });
 
 require __DIR__.'/auth.php';
-
-Route::resource('student', StudentController::class)->except(['index']);

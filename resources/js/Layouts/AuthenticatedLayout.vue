@@ -39,7 +39,7 @@ const showingNavigationDropdown = ref(false);
                                     CÀI ĐẶT
                                 </NavLink>
 
-                                <NavLink :href="route('student.create')" :active="route().current('student.create')">
+                                <NavLink v-if="usePage().props.auth.user.student_id == null" :href="route('student.create')" :active="route().current('student.create')">
                                     CẬP NHẬT
                                 </NavLink>
 

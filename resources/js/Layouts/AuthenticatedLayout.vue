@@ -39,12 +39,16 @@ const showingNavigationDropdown = ref(false);
                                     CÀI ĐẶT
                                 </NavLink>
 
-                                <NavLink v-if="usePage().props.auth.user.student_id == null" :href="route('student.create')" :active="route().current('student.create')">
+                                <NavLink v-if="( usePage().props.auth.user.role_id == 4 && usePage().props.auth.user.student_id == null)" :href="route('student.create')" :active="route().current('student.create')">
                                     CẬP NHẬT
                                 </NavLink>
 
-                                <NavLink :href="route('student.edit', { id: usePage().props.auth.user.id })" :active="route().current('student.edit', { id: usePage().props.auth.user.id })">
-                                    HỒ SƠ
+                                <NavLink v-if="(usePage().props.auth.user.role_id == 4 && usePage().props.auth.user.student_id != null)" :href="route('student.edit', { id: usePage().props.auth.user.student_id })" :active="route().current('student.edit', { id: usePage().props.auth.user.student_id })">
+                                    HỒ SƠ 
+                                </NavLink>
+
+                                <NavLink v-if="usePage().props.auth.user.role_id == 1" :href="route('teacher.create')" :active="route().current('teacher.create')">
+                                    QUẢN LÝ GIẢNG VIÊN
                                 </NavLink>
 
                             </div>

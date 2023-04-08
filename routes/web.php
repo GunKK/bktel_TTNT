@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminTeacherController;
+use App\Http\Controllers\Admin\AdminImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Foundation\Application;
@@ -41,6 +43,20 @@ Route::middleware('auth')->group(function () {
             Route::resource('student', StudentController::class)->except(['index', 'create']);
         });
     });
+
+    // admin
+    Route::group(['prefix' => 'admin','middleware' => 'admin_check'], function() {
+        // Route::get('/dashboard', function () {
+        //     return Inertia::render('DashboardAdmin');
+        // });
+        Route::get('teacher', [AdminTeacherController::class, 'index'])->name('teacher.index');
+        Route::get('teacher/new', [AdminTeacherController::class, 'create'])->name('teacher.create');
+        Route::post('teacher', [AdminTeacherController::class, 'store'])->name('teacher.store');
+        
+        // Route::get('teacher/import', [AdminImportController::class, 'import'])->name('file.create');
+        // Route::post('teacher/import', [AdminImportController::class, 'store'])->name('file.store');
+    });
+
 });
 
 require __DIR__.'/auth.php';

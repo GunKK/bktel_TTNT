@@ -3,36 +3,50 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
-
-const props = defineProps({
-    student: Object,
-});
+import { useForm, usePage } from '@inertiajs/vue3';
 
 
 const form = useForm({
-    last_name: props.student.last_name,
-    first_name: props.student.first_name,
-    student_code: props.student.student_code,
-    department: props.student.department,
-    faculty: props.student.faculty,
-    address: props.student.address,
-    phone: props.student.phone,
-    note: props.student.note,
+    email: null,
+    last_name: null,
+    first_name: null,
+    teacher_code: null,
+    department: null,
+    faculty: null,
+    address: null,
+    phone: null,
+    note: null,
 });
 </script>
 
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Thông tin sinh viên</h2>
+            <h2 class="text-lg font-medium text-gray-900">Tạo giảng viên</h2>
 
             <p class="mt-1 text-sm text-gray-600">
-                Cập nhật thông tin sinh viên
+                Cập nhật thông tin giảng viên
             </p>
         </header>
 
-        <form @submit.prevent="form.put(route('student.update',{id: props.student.id}))" class="mt-6 space-y-6">
+        <form @submit.prevent="form.post(route('teacher.store'))" class="mt-6 space-y-6">
+
+            <div>
+                <InputLabel for="last_name" value="Email" />
+
+                <TextInput
+                    id="email"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.email"
+                    required
+                    autofocus
+                    autocomplete="email"
+                />
+
+                <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
             <div>
                 <InputLabel for="last_name" value="Họ" />
 
@@ -66,19 +80,19 @@ const form = useForm({
             </div>
 
             <div>
-                <InputLabel for="student_code" value="Mã số sinh viên" />
+                <InputLabel for="teacher_code" value="Mã số cán bộ" />
 
                 <TextInput
-                    id="student_code"
+                    id="teacher_code"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.student_code"
+                    v-model="form.teacher_code"
+                    required
                     autofocus
-                    autocomplete="student_code"
-                    disabled
+                    autocomplete="teacher_code"
                 />
 
-                <InputError class="mt-2" :message="form.errors.student_code" />
+                <InputError class="mt-2" :message="form.errors.teacher_code" />
             </div>
 
             <div>

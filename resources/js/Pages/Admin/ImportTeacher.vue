@@ -1,6 +1,11 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
+import Progress from '@/Components/Progress.vue';
+
+const form = useForm({
+  teacher_csv: null,
+})
 
 </script>
 
@@ -8,24 +13,25 @@ import { Head } from '@inertiajs/vue3';
     <Head title="Profile" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Trang quản trị</h2>
-        </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Import danh sách giảng viên</h2>
         
-
+    
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <form @submit.prevent="form.post(route('import.store'))" class="mt-6 space-y-6">
+                    <form @submit.prevent="form.post(route('import_teacher.store'))" class="mt-6 space-y-6">
                         <div>
-                            <input type="file" class="form-control">
+    
+                            <input type="file" @input="form.teacher_csv = $event.target.files[0]" />
                         </div>
-                   
-                        <div class="flex items-center gap-4">
-                            <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
-                        </div>
+    
+                        <!-- <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                            {{ form.progress.percentage }}%
+                        </progress> -->
+    
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+    
                     </form>     
                 </div>
                 

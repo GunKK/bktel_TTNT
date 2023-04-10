@@ -47,9 +47,42 @@ const showingNavigationDropdown = ref(false);
                                     HỒ SƠ 
                                 </NavLink>
 
-                                <NavLink v-if="usePage().props.auth.user.role_id == 1" :href="route('teacher.create')" :active="route().current('teacher.create')">
-                                    QUẢN LÝ GIẢNG VIÊN
-                                </NavLink>
+                                <div class="hidden sm:flex sm:items-center sm:ml-6" v-if="usePage().props.auth.user.role_id == 1">
+                                    <!-- Settings Dropdown -->
+                                    <div class="ml-3 relative">
+                                        <Dropdown align="right" width="48">
+                                            <template #trigger>
+                                                <span class="inline-flex rounded-md">
+                                                    <button
+                                                        type="button"
+                                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                    >
+                                                        QUẢN LÝ GIẢNG VIÊN
+        
+                                                        <svg
+                                                            class="ml-2 -mr-0.5 h-4 w-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 20 20"
+                                                            fill="currentColor"
+                                                        >
+                                                            <path
+                                                                fill-rule="evenodd"
+                                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                                clip-rule="evenodd"
+                                                            />
+                                                        </svg>
+                                                    </button>
+                                                </span>
+                                            </template>
+        
+                                            <template #content>
+                                                <DropdownLink :href="route('teacher.create')"> Tạo mới </DropdownLink>
+                                                <DropdownLink :href="route('teacher.index')"> Danh sách </DropdownLink>
+                                                <DropdownLink :href="route('import_teacher.create')"> Import csv </DropdownLink>
+                                            </template>
+                                        </Dropdown>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>

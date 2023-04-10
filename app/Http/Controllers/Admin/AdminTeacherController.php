@@ -39,7 +39,7 @@ class AdminTeacherController extends Controller
         $user = new User();
         $user->name = $data['last_name']." ".$data['first_name'];
         $user->email = $data['email'];
-        $user->password = Hash::make('Bmvt@hcmut');
+        $user->password = Hash::make('Bmvt@2022');
         $user->role_id = 3;
         $user->teacher_id = $teacher->id;
         $user->save();

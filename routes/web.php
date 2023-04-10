@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminTeacherController;
-use App\Http\Controllers\Admin\AdminImportController;
+use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Foundation\Application;
@@ -53,8 +53,8 @@ Route::middleware('auth')->group(function () {
         Route::get('teacher/new', [AdminTeacherController::class, 'create'])->name('teacher.create');
         Route::post('teacher', [AdminTeacherController::class, 'store'])->name('teacher.store');
         
-        // Route::get('teacher/import', [AdminImportController::class, 'import'])->name('file.create');
-        // Route::post('teacher/import', [AdminImportController::class, 'store'])->name('file.store');
+        Route::get('import.teacher', [ImportController::class, 'import_teacher'])->name('import_teacher.create');
+        Route::post('import.teacher', [ImportController::class, 'store_teacher'])->name('import_teacher.store');
     });
 
 });

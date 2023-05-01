@@ -20,8 +20,10 @@
     "dependencies": {
         "@inertiajs/progress": "^0.2.7",
         "@inertiajs/vue3": "^1.0.2",
+        "@usecsv/vuejs3": "^1.0.1",
         "@vitejs/plugin-vue": "^4.0.0",
         "vue": "^3.2.36",
+        "vue-csv-import": "^4.1.2",
         "vue-loader": "^17.0.1"
     }
 }

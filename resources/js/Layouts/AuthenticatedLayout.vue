@@ -1,11 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import UserLogo from '@/Components/UserLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -13,7 +14,7 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+            <nav class="bg-white border-b border-gray-100 sticky top-0">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -29,9 +30,60 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    TRANG CHỦ
                                 </NavLink>
+
+                                <NavLink :href="route('profile.edit')" :active="route().current('profile.edit')">
+                                    CÀI ĐẶT
+                                </NavLink>
+
+                                <NavLink v-if="( usePage().props.auth.user.role_id == 4 && usePage().props.auth.user.student_id == null)" :href="route('student.create')" :active="route().current('student.create')">
+                                    CẬP NHẬT
+                                </NavLink>
+
+                                <NavLink v-if="(usePage().props.auth.user.role_id == 4 && usePage().props.auth.user.student_id != null)" :href="route('student.edit', { id: usePage().props.auth.user.student_id })" :active="route().current('student.edit', { id: usePage().props.auth.user.student_id })">
+                                    HỒ SƠ 
+                                </NavLink>
+
+                                <div class="hidden sm:flex sm:items-center sm:ml-6" v-if="usePage().props.auth.user.role_id == 1">
+                                    <!-- Settings Dropdown -->
+                                    <div class="ml-3 relative">
+                                        <Dropdown align="right" width="48">
+                                            <template #trigger>
+                                                <span class="inline-flex rounded-md">
+                                                    <button
+                                                        type="button"
+                                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                    >
+                                                        QUẢN LÝ GIẢNG VIÊN
+        
+                                                        <svg
+                                                            class="ml-2 -mr-0.5 h-4 w-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 20 20"
+                                                            fill="currentColor"
+                                                        >
+                                                            <path
+                                                                fill-rule="evenodd"
+                                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                                clip-rule="evenodd"
+                                                            />
+                                                        </svg>
+                                                    </button>
+                                                </span>
+                                            </template>
+        
+                                            <template #content>
+                                                <DropdownLink :href="route('teacher.create')"> Tạo mới </DropdownLink>
+                                                <DropdownLink :href="route('teacher.index')"> Danh sách </DropdownLink>
+                                                <DropdownLink :href="route('import_teacher.create')"> Import csv </DropdownLink>
+                                            </template>
+                                        </Dropdown>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
@@ -45,6 +97,9 @@ const showingNavigationDropdown = ref(false);
                                                 type="button"
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
+                                            <UserLogo
+                                                class="block h-9 w-auto fill-current text-gray-800"
+                                            />
                                                 {{ $page.props.auth.user.name }}
 
                                                 <svg
@@ -64,9 +119,10 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                        <DropdownLink :href="route('profile.edit')"> Cài đặt </DropdownLink>
+                                        <DropdownLink :href="route('student.edit', { id: usePage().props.auth.user.id })"> Hồ sơ </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
+                                            Đăng xuất
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -113,7 +169,7 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            Trang chủ
                         </ResponsiveNavLink>
                     </div>
 
@@ -127,9 +183,9 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile.edit')"> Cài đặt </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                Đăng xuất
                             </ResponsiveNavLink>
                         </div>
                     </div>

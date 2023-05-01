@@ -40,11 +40,10 @@ const closeModal = () => {
 <template>
     <section class="space-y-6">
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Delete Account</h2>
+            <h2 class="text-lg font-medium text-gray-900">Xóa tài khoản</h2>
 
             <p class="mt-1 text-sm text-gray-600">
-                Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
-                your account, please download any data or information that you wish to retain.
+                Sau khi tài khoản bị xóa, tất cả dữ liệu sẽ bị xóa vĩnh viễn, Vui lòng tải các dữ liệu cần thiết trước khi thực hiện hành động này
             </p>
         </header>
 

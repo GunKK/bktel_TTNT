@@ -21,10 +21,10 @@ const form = useForm({
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
+            <h2 class="text-lg font-medium text-gray-900">Thông tin tài khoản</h2>
 
             <p class="mt-1 text-sm text-gray-600">
-                Update your account's profile information and email address.
+                Cập nhật thông tin tài khoản của bạn
             </p>
         </header>
 
@@ -45,7 +45,7 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
-            <div>
+            <!-- <div>
                 <InputLabel for="email" value="Email" />
 
                 <TextInput
@@ -58,7 +58,7 @@ const form = useForm({
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+            </div> -->
 
             <div v-if="props.mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800">

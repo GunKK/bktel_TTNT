@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminTeacherController;
+use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +36,30 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::group(['middleware' => 'student_check'], function () {
+        Route::get('student/create', [StudentController::class, 'create'])->name('student.create');
+        Route::middleware('student_null')->group(function () {
+            Route::resource('student', StudentController::class)->except(['index', 'create']);
+        });
+    });
+
+    // admin
+    Route::group(['prefix' => 'admin','middleware' => 'admin_check'], function() {
+        // Route::get('/dashboard', function () {
+        //     return Inertia::render('DashboardAdmin');
+        // });
+        Route::get('teacher', [AdminTeacherController::class, 'index'])->name('teacher.index');
+        Route::get('teacher/new', [AdminTeacherController::class, 'create'])->name('teacher.create');
+        Route::post('teacher', [AdminTeacherController::class, 'store'])->name('teacher.store');
+        
+        Route::get('import.teacher', [ImportController::class, 'importTeacher'])->name('import_teacher.create');
+        Route::post('import.teacher', [ImportController::class, 'storeTeacher'])->name('import_teacher.store');
+        Route::get('import.student', [ImportController::class, 'importStudent'])->name('import_student.create');
+        Route::post('import.student', [ImportController::class, 'storeStudent'])->name('import_student.store');
+        // Route::get('import.test', [ImportController::class, 'testImport']);
+    });
+
 });
 
 require __DIR__.'/auth.php';

@@ -15,11 +15,11 @@ const form = useForm({
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Import danh sách giảng viên</h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Import danh sách sinh viên</h2>
         
     
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <form @submit.prevent="form.post(route('import_teacher.store'))" class="mt-6 space-y-6">
+                    <form @submit.prevent="form.post(route('import_student.store'))" class="mt-6 space-y-6">
                         <div>
     
                             <input type="file" @input="form.csv_import = $event.target.files[0]" />

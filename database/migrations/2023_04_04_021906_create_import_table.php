@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('import', function (Blueprint $table) {
+        Schema::create('imports', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('path');
             $table->string('status');
+            $table->string('created_by');
             $table->string('note')->nullable();
             $table->timestamps();
         });

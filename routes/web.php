@@ -53,8 +53,11 @@ Route::middleware('auth')->group(function () {
         Route::get('teacher/new', [AdminTeacherController::class, 'create'])->name('teacher.create');
         Route::post('teacher', [AdminTeacherController::class, 'store'])->name('teacher.store');
         
-        Route::get('import.teacher', [ImportController::class, 'import_teacher'])->name('import_teacher.create');
-        Route::post('import.teacher', [ImportController::class, 'store_teacher'])->name('import_teacher.store');
+        Route::get('import.teacher', [ImportController::class, 'importTeacher'])->name('import_teacher.create');
+        Route::post('import.teacher', [ImportController::class, 'storeTeacher'])->name('import_teacher.store');
+        Route::get('import.student', [ImportController::class, 'importStudent'])->name('import_student.create');
+        Route::post('import.student', [ImportController::class, 'storeStudent'])->name('import_student.store');
+        // Route::get('import.test', [ImportController::class, 'testImport']);
     });
 
 });

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Admin\TeacherToSubjectController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -64,6 +65,10 @@ Route::middleware('auth')->group(function () {
         Route::post('import.student', [ImportController::class, 'storeStudent'])->name('import_student.store');
         Route::get('import.subject', [ImportController::class, 'importSubject'])->name('import_subject.create');
         Route::post('import.subject', [ImportController::class, 'storeSubject'])->name('import_subject.store');
+            
+        Route::get('teacherToSubjects', [TeacherToSubjectController::class, 'index']);
+        Route::get('teacherToSubjects/new', [TeacherToSubjectController::class, 'create'])->name('teacherToSubjects.create');
+        Route::post('teacherToSubjects', [TeacherToSubjectController::class, 'store'])->name('teacherToSubjects.store');
     });
 
 });

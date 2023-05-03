@@ -37,7 +37,7 @@ class StudentsImport implements ToCollection, WithStartRow
             $user = new User();
             $user->name = $row[0]." ".$row[1];
             $user->email = $row[2];
-            $user->password = $row[9];
+            $user->password = Hash::make($row[9]);
             $user->role_id = 4;
             $user->student_id = $student->id;
             $user->save();

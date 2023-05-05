@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import UserLogo from '@/Components/UserLogo.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -45,7 +46,7 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
-            <!-- <div>
+            <div>
                 <InputLabel for="email" value="Email" />
 
                 <TextInput
@@ -58,7 +59,7 @@ const form = useForm({
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
-            </div> -->
+            </div>
 
             <div v-if="props.mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800">

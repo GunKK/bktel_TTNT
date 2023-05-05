@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -60,5 +62,18 @@ class ProfileController extends Controller
 
         // return Redirect::to('/');
         return Redirect::route('login');
+    }
+
+    public function uploadImg(ImageRequest $request): RedirectResponse
+    {   
+        $id = $request->user()->id;
+        $file_name = date('Ymd_His_').$request->profile_images->getClientOriginalName();
+
+        $user = User::findOrFail($id);
+        $user->profile_images = $file_name;
+        $user->save();
+
+        $request->profile_images->move(storage_path('app\\public\\profiles\\'. $id), $file_name);
+        return Redirect::route('profile.edit');
     }
 }

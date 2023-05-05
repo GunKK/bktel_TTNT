@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Admin\TeacherToSubjectController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -71,6 +72,8 @@ Route::middleware('auth')->group(function () {
         Route::post('teacherToSubjects', [TeacherToSubjectController::class, 'store'])->name('teacherToSubjects.store');
     });
 
+    Route::post('/api/search', [ReportController::class, 'search'])->name('search');
+    Route::post('/upload.report', [ReportController::class, 'store'])->name('upload_report');
 });
 
 require __DIR__.'/auth.php';

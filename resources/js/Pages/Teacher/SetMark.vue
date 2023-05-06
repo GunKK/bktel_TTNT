@@ -10,7 +10,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { reactive } from 'vue';
 
 const data = reactive({
-    subjects: [],
+    reports: [],
     q: null,
 });
 
@@ -23,10 +23,10 @@ const handelSubmit  = async () => {
 
         if(response.data.length != 0 ) {
             console.log(response.data)
-            data.subjects = response.data
+            data.reports = response.data
         } else {
-            data.message = "Không tìm thấy môn học nào"
-            console.log("Không tìm thấy môn học nào")
+            data.message = "Không tìm thấy báo cáo nào"
+            console.log("Không tìm thấy báo cáo nào")
         }
     } catch(error) {
         console.log(error)
@@ -52,7 +52,7 @@ const downloadReport  = async (event) => {
 
 
 const form = useForm({
-    teacher_to_subjects_id: null,
+    report_id: null,
     mark: null,
 })
 
@@ -83,27 +83,26 @@ const form = useForm({
         <InputError v-if="data.message" class="mt-2" :message="data.message" />
 
         <form @submit.prevent="form.post(route('teacher.setmark'))" class="mt-6 space-y-6">
-
-            <div v-for="subject in data.subjects">
+            <div v-for="report in data.reports">
                 <InputLabel 
-                    :id="subject.id" 
-                    :value="`${subject.code} ${subject.name} - Sinh viên: ${subject.last_name} ${subject.first_name} -Tiêu đề: ${subject.title} - ${subject.semester}/${subject.year}`" 
+                    :id="report.id" 
+                    :value="`${report.code} ${report.name} - Sinh viên: ${report.last_name} ${report.first_name} -Tiêu đề: ${report.title} - ${report.semester}/${report.year}`" 
                 />
 
                 <TextInput
-                    :key="subject.id"
+                    :key="report.id"
                     id="id"
                     type="radio"
                     class="mt-1"
-                    :value="subject.id"
-                    v-model="form.teacher_to_subjects_id"
+                    :value="report.id"
+                    v-model="form.report_id"
                 />
 
                 <div>
-                    {{ subject.path }}
+                    {{ report.path }}
                     <div>
-                        <button v-bind:data-path="subject.path" @click="viewReport" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full">View</button>
-                        <button v-bind:data-path="subject.path" @click="downloadReport" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ml-4">Download</button>
+                        <button v-bind:data-path="report.path" @click="viewReport" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full">View</button>
+                        <button v-bind:data-path="report.path" @click="downloadReport" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ml-4">Download</button>
                     </div>
                 </div>
             </div>
@@ -113,7 +112,8 @@ const form = useForm({
 
                 <TextInput
                     id="mark"
-                    type="text"
+                    type="number"
+                    step="any"
                     class="mt-1 block w-full"
                     v-model="form.mark"
                 />

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MarkReportRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Report;
@@ -13,7 +14,7 @@ class TeacherController extends Controller
     {
         $q = $request->q;
         $teacherId = Auth::user()->teacher_id;
-        $result = Report::select('teacher_to_subjects.id','last_name', 'first_name', 'name', 'code', 'year', 'semester', 'title', 'path')
+        $result = Report::select('reports.id','last_name', 'first_name', 'name', 'code', 'year', 'semester', 'title', 'path')
             ->join('teacher_to_subjects', 'teacher_to_subjects.id', '=', 'teacher_to_subjects_id')
             ->join('students', 'students.id','=','reports.student_id')
             ->join('subjects', 'subjects.id','=','teacher_to_subjects.subject_id')
@@ -27,8 +28,15 @@ class TeacherController extends Controller
         return response()->json($result);
     }
 
-    public function setMark() 
+    public function setMark(MarkReportRequest $request) 
     {
-        
+        // dd($request->all());
+        $id = $request->report_id;
+
+        $report = Report::find($id);
+        $report->mark = $request->mark;
+        $report->save();
+
+        return response()->json($report);
     }
 }

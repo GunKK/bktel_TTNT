@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-use Inertia\Response;
+// use Inertia\Response;
+use Illuminate\Support\Facades\Response;
 
 class ReportController extends Controller
 {
@@ -48,5 +49,17 @@ class ReportController extends Controller
             ->get();
         
         return response()->json($result);
+    }
+
+    public function viewReport(Request $request) 
+    {
+        $pathToFile = $request->path;
+        return response()->file($pathToFile);
+    }
+
+    public function downloadReport(Request $request) 
+    {
+        $pathToFile = $request->path;
+        return response()->download($pathToFile);
     }
 }

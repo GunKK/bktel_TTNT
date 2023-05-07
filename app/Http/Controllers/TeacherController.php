@@ -6,7 +6,6 @@ use App\Http\Requests\MarkReportRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Report;
-use Inertia\Inertia;
 
 class TeacherController extends Controller
 {

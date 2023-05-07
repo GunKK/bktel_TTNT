@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminTeacherController;
+use App\Http\Controllers\Admin\ExportController as AdminExportController;
 use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\ProfileController;
@@ -72,6 +73,9 @@ Route::middleware('auth')->group(function () {
         Route::get('teacherToSubjects', [TeacherToSubjectController::class, 'index']);
         Route::get('teacherToSubjects/new', [TeacherToSubjectController::class, 'create'])->name('teacherToSubjects.create');
         Route::post('teacherToSubjects', [TeacherToSubjectController::class, 'store'])->name('teacherToSubjects.store');
+
+        Route::get('export', [AdminExportController::class, 'create'])->name('export.mark');
+        Route::get('/export.mark', [AdminExportController::class, 'exportMark']);
     });
 
     //student

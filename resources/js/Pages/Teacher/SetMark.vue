@@ -36,7 +36,6 @@ const handelSubmit  = async () => {
 const clearResults = () => {
     data.subjects = [];
     data.message = '';
-    data.pdf = [];
 }
 
 const viewReport  = async (event) => {

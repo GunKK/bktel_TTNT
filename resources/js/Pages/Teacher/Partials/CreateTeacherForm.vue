@@ -32,7 +32,7 @@ const form = useForm({
         <form @submit.prevent="form.post(route('teacher.store'))" class="mt-6 space-y-6">
 
             <div>
-                <InputLabel for="last_name" value="Email" />
+                <InputLabel for="email" value="Email" />
 
                 <TextInput
                     id="email"

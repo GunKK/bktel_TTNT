@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminTeacherController;
+use App\Http\Controllers\Admin\ExportController as AdminExportController;
 use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Admin\TeacherToSubjectController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,6 +40,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/img', [ProfileController::class, 'uploadImg'])->name('profile.update_img');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['middleware' => 'student_check'], function () {
@@ -70,10 +73,25 @@ Route::middleware('auth')->group(function () {
         Route::get('teacherToSubjects', [TeacherToSubjectController::class, 'index']);
         Route::get('teacherToSubjects/new', [TeacherToSubjectController::class, 'create'])->name('teacherToSubjects.create');
         Route::post('teacherToSubjects', [TeacherToSubjectController::class, 'store'])->name('teacherToSubjects.store');
+
+        Route::get('export', [AdminExportController::class, 'create'])->name('export.mark');
+        Route::get('/export.mark', [AdminExportController::class, 'exportMark']);
     });
 
-    Route::post('/api/search', [ReportController::class, 'search'])->name('search');
-    Route::post('/upload.report', [ReportController::class, 'store'])->name('upload_report');
+    //student
+    Route::group(['prefix' => 'student'], function() {
+        Route::post('/api/search', [ReportController::class, 'search']);
+        Route::post('/upload.report', [ReportController::class, 'store'])->name('upload_report');
+    });
+
+    //teacher
+    Route::group(['prefix' => 'teacher'], function() {
+        Route::post('/api/search', [TeacherController::class, 'search']);
+        Route::post('/setmark', [TeacherController::class, 'setMark'])->name('teacher.setmark');
+    });
+
+    Route::get('api/view.report', [ReportController::class, 'viewReport'])->name('view.report');
+    Route::get('api/download.report', [ReportController::class, 'downloadReport'])->name('download.report');
 });
 
 require __DIR__.'/auth.php';
